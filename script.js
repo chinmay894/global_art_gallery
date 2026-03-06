@@ -27,6 +27,26 @@ likeBtn.innerText = "❤️ Like"
 likeBtn.className = "likeBtn"
 
 artDiv.appendChild(likeBtn)
+const saveBtn = document.createElement("button")
+saveBtn.innerText = "Save"
+saveBtn.className = "saveBtn"
+
+artDiv.appendChild(saveBtn)
+saveBtn.addEventListener("click", (event) => {
+
+event.stopPropagation()
+
+let saved = JSON.parse(localStorage.getItem("savedArt")) || []
+
+if(!saved.includes(img.src)){
+saved.push(img.src)
+}
+
+localStorage.setItem("savedArt", JSON.stringify(saved))
+
+saveBtn.innerText = "Saved"
+
+})
 likeBtn.addEventListener("click", (event) => {
 
 event.stopPropagation()
