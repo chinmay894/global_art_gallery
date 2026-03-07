@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Saved Art</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<h1>My Saved Art</h1>
+<a href="index.html">← Back to Gallery</a>
+</header>
+
+<div id="savedGallery"></div>
+
+<script>
+
+const savedGallery = document.getElementById("savedGallery")
+
+let liked = JSON.parse(localStorage.getItem("savedArt")) || []
+
+liked.forEach(src => {
+
+const artDiv = document.createElement("div")
+artDiv.className = "art"
+
+const img = document.createElement("img")
+img.src = src
+
+artDiv.appendChild(img)
+
+savedGallery.appendChild(artDiv)
+
+})
+
+</script>
+
+</body>
+</html>
