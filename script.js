@@ -63,6 +63,18 @@ caption.innerText = art.title
 artDiv.appendChild(media)
 artDiv.appendChild(caption)
 
+artDiv.addEventListener("click", () => {
+
+const modal = document.getElementById("artModal")
+const modalImg = document.getElementById("modalImg")
+const modalCaption = document.getElementById("modalCaption")
+
+modal.style.display = "flex"
+modalImg.src = art.image_url
+modalCaption.innerText = art.title
+
+})
+
 gallery.appendChild(artDiv)
 
 })
@@ -144,3 +156,9 @@ loadArtworks()
 }
 )
 .subscribe()
+
+const closeModal = document.getElementById("closeModal")
+
+closeModal.onclick = function(){
+document.getElementById("artModal").style.display = "none"
+}
