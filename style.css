@@ -181,3 +181,31 @@ transition:0.2s;
 background:#265df2;
 transform:scale(1.05);
 }
+.uploadBox{
+background:white;
+padding:30px;
+border-radius:10px;
+text-align:center;
+width:300px;
+}
+
+.uploadBox input{
+width:90%;
+padding:8px;
+margin:5px 0;
+}
+
+.uploadBox button{
+margin-top:10px;
+padding:8px 15px;
+border:none;
+background:black;
+color:white;
+cursor:pointer;
+border-radius:5px;
+}
+
+.upload{
+background:#222;
+color:white;
+}

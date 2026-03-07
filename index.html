@@ -36,6 +36,10 @@ Saved Art
 Explore Art
 </button>
 
+<button class="navBtn upload" id="openUpload">
+Upload Art
+</button>
+
 </div>
 
 </header>
@@ -44,6 +48,25 @@ Explore Art
   <span id="closeModal">&times;</span>
   <img id="modalImg">
   <p id="modalCaption"></p>
+</div>
+<div id="uploadModal" class="modal">
+
+  <div class="uploadBox">
+
+    <h2>Upload Your Artwork</h2>
+
+    <input type="text" id="uploadTitle" placeholder="Artwork title">
+    <br><br>
+
+    <input type="file" id="uploadImage">
+    <br><br>
+
+    <button id="uploadBtn">Upload</button>
+
+    <button id="closeUpload">Cancel</button>
+
+  </div>
+
 </div>
 
 <script type="module" src="script.js"></script>
