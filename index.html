@@ -8,6 +8,15 @@
 <link rel="stylesheet" href="style.css">
 
 </head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+
+const supabaseUrl = "https://fxtndjohhnyfuewyrcqm.supabase.co"
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4dG5kam9oaG55ZnVld3lyY3FtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MTQ1NzUsImV4cCI6MjA4ODM5MDU3NX0.MY7k5z2eAPypC1cFURAtw-XPBw8b_q4-iUzyFjgf4IU"
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+
+</script>
 
 <body>
 
@@ -37,7 +46,7 @@ Explore Art
   <p id="modalCaption"></p>
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>

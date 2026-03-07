@@ -1,106 +1,46 @@
-const searchInput = document.getElementById("searchInput")
-const searchBtn = document.getElementById("searchBtn")
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
+
+const supabaseUrl = "https://fxtndjohhnyfuewyrcqm.supabase.co"
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4dG5kam9oaG55ZnVld3lyY3FtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MTQ1NzUsImV4cCI6MjA4ODM5MDU3NX0.MY7k5z2eAPypC1cFURAtw-XPBw8b_q4-iUzyFjgf4IU"
+
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 const gallery = document.getElementById("gallery")
 
-let imageCount = 1
+async function loadArtworks(){
 
-function loadArtworks(){
+const { data, error } = await supabase
+.from("artworks")
+.select("*")
+.eq("status","approved")
 
-for(let i=0;i<8;i++){
+console.log(data)
+
+if(error){
+console.error(error)
+return
+}
+
+gallery.innerHTML = ""
+
+data.forEach(art => {
 
 const artDiv = document.createElement("div")
 artDiv.className = "art"
 
 const img = document.createElement("img")
-
-img.src = `https://picsum.photos/500/600?random=${imageCount++}`
+img.src = art.image_url
 
 const caption = document.createElement("p")
-caption.innerText = "Artwork from a global artist"
+caption.innerText = art.title
 
 artDiv.appendChild(img)
 artDiv.appendChild(caption)
 
-const likeBtn = document.createElement("button")
-likeBtn.innerText = "❤️ Like"
-likeBtn.className = "likeBtn"
-
-artDiv.appendChild(likeBtn)
-const saveBtn = document.createElement("button")
-saveBtn.innerText = "Save"
-saveBtn.className = "saveBtn"
-
-artDiv.appendChild(saveBtn)
-saveBtn.addEventListener("click", (event) => {
-
-event.stopPropagation()
-
-let saved = JSON.parse(localStorage.getItem("savedArt")) || []
-
-if(!saved.includes(img.src)){
-saved.push(img.src)
-}
-
-localStorage.setItem("savedArt", JSON.stringify(saved))
-
-saveBtn.innerText = "Saved"
-
-})
-likeBtn.addEventListener("click", (event) => {
-
-event.stopPropagation()
-
-let liked = JSON.parse(localStorage.getItem("likedArt")) || []
-
-liked.push(img.src)
-
-localStorage.setItem("likedArt", JSON.stringify(liked))
-
-likeBtn.innerText = "❤️ Liked"
-
-})
-artDiv.addEventListener("click", () => {
-
-const modal = document.getElementById("artModal")
-const modalImg = document.getElementById("modalImg")
-const modalCaption = document.getElementById("modalCaption")
-
-modal.style.display = "flex"
-modalImg.src = img.src
-modalCaption.innerText = caption.innerText
-
-})
-
 gallery.appendChild(artDiv)
 
-}
-
-}
-
-loadArtworks()
-
-window.addEventListener("scroll", () => {
-
-if(window.innerHeight + window.scrollY >= document.body.offsetHeight - 100){
-
-loadArtworks()
-
-}
-
 })
-const modal = document.getElementById("artModal")
-const closeModal = document.getElementById("closeModal")
 
-closeModal.onclick = function(){
-modal.style.display = "none"
 }
-searchBtn.addEventListener("click", () => {
-
-gallery.innerHTML = ""
-
-imageCount = Math.floor(Math.random()*1000)
 
 loadArtworks()
-
-})
