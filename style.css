@@ -256,7 +256,6 @@ opacity:1;
 .art:hover{
 transform:translateY(-8px) scale(1.03);
 }
-
 /* artwork image */
 
 .artMedia{
@@ -437,4 +436,56 @@ transform:translateX(-5%) translateY(5%) rotate(360deg);
 .mainHeader > *{
 position:relative;
 z-index:2;
+}
+
+
+/* GRAFFITI WALL BACKGROUND */
+
+body::before{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background:
+radial-gradient(circle at 20% 20%, rgba(255,0,150,0.15) 0px, transparent 200px),
+radial-gradient(circle at 80% 40%, rgba(0,255,200,0.15) 0px, transparent 200px),
+radial-gradient(circle at 40% 80%, rgba(255,255,0,0.12) 0px, transparent 200px),
+radial-gradient(circle at 70% 70%, rgba(0,150,255,0.12) 0px, transparent 200px);
+
+z-index:-2;
+}
+/* SPRAY DOTS */
+
+body::after{
+content:"";
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+
+background-image:
+radial-gradient(#ff2f92 1px, transparent 1px),
+radial-gradient(#00f7ff 1px, transparent 1px),
+radial-gradient(#ffd000 1px, transparent 1px);
+
+background-size:120px 120px, 180px 180px, 150px 150px;
+
+opacity:0.08;
+
+z-index:-1;
+}
+.art:nth-child(2n){
+transform:rotate(1deg);
+}
+
+.art:nth-child(3n){
+transform:rotate(-1deg);
+}
+
+.art:nth-child(5n){
+transform:rotate(0.6deg);
 }
