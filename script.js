@@ -60,8 +60,31 @@ media.className = "artMedia"
 const caption = document.createElement("p")
 caption.innerText = art.title
 
+
+/* ARTIST SECTION */
+
+const artistBox = document.createElement("div")
+artistBox.className = "artistBox"
+
+const avatar = document.createElement("img")
+avatar.src = art.artist_avatar || "https://via.placeholder.com/30"
+avatar.className = "artistAvatar"
+
+const artistName = document.createElement("span")
+artistName.innerText = art.artist_name || "Unknown Artist"
+
+artistBox.appendChild(avatar)
+artistBox.appendChild(artistName)
+
+
+/* APPEND ELEMENTS */
+
 artDiv.appendChild(media)
 artDiv.appendChild(caption)
+artDiv.appendChild(artistBox)
+
+
+/* FULLSCREEN MODAL */
 
 artDiv.addEventListener("click", () => {
 
@@ -85,20 +108,32 @@ loadArtworks()
 
 uploadBtn.onclick = async () => {
 
-const title = document.getElementById("uploadTitle").value
-const file = document.getElementById("uploadImage").files[0]
-const fileType = file.type.startsWith("video") ? "video" : "image"
+/* CHECK IF PROFILE EXISTS */
 
-if(!file){
-alert("Please select an image")
+if(!localStorage.getItem("artistName")){
+alert("Create your artist profile first")
 return
 }
 
+/* GET ARTWORK DATA */
+
+const title = document.getElementById("uploadTitle").value
+const file = document.getElementById("uploadImage").files[0]
+
+if(!file){
+alert("Please select a file")
+return
+}
+
+const fileType = file.type.startsWith("video") ? "video" : "image"
+
+/* CREATE FILE NAME */
+
 const fileName = Date.now() + "-" + file.name
 
-// Upload image to Supabase Storage
-const { error: uploadError } =
-await supabase.storage
+/* UPLOAD FILE TO SUPABASE */
+
+const { error: uploadError } = await supabase.storage
 .from("artworks")
 .upload(fileName, file)
 
@@ -108,21 +143,23 @@ alert("Upload failed")
 return
 }
 
-// Get public URL of image
-const { data } =
-supabase.storage
+/* GET PUBLIC URL */
+
+const { data } = supabase.storage
 .from("artworks")
 .getPublicUrl(fileName)
 
-// Insert artwork record in database
-const { error: insertError } =
-await supabase
+/* INSERT ARTWORK INTO DATABASE */
+
+const { error: insertError } = await supabase
 .from("artworks")
 .insert([
 {
 title: title,
 image_url: data.publicUrl,
 type: fileType,
+artist_name: localStorage.getItem("artistName"),
+artist_avatar: localStorage.getItem("artistAvatar"),
 status: "pending"
 }
 ])

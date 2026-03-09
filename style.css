@@ -1,45 +1,173 @@
-body{
-font-family: Arial;
-background:#111;
-color:white;
-margin:0;
+/* ===== MAIN PAGE ===== */
+html, body{
+overflow-x:hidden;
 }
-
-header{
+img, video{
+max-width:100%;
+height:auto;
+}
+body{
+margin:0;
+font-family:'Segoe UI',sans-serif;
+background:linear-gradient(135deg,#0f172a,#1e293b,#020617);
+color:white;
 display:flex;
 flex-direction:column;
 align-items:center;
+
+}
+.pageContainer{
+width:100%;
+max-width:1400px;
+margin:0 auto;
+padding:20px;
+box-sizing:border-box;
+}
+
+/* HEADER */
+
+.mainHeader{
+width:100%;
+max-width:1400px;
+margin:0 auto;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px;
+box-sizing:border-box;
+flex-wrap:wrap;
+}
+
+.logoSection h1{
+margin:0;
+font-size:26px;
+letter-spacing:1px;
+}
+
+.logoSection p{
+margin:0;
+font-size:13px;
+opacity:0.7;
+}
+
+/* SEARCH */
+
+.searchSection{
+display:flex;
 gap:10px;
-padding:25px;
-background:#0d0d0d;
-border-bottom:1px solid #222;
 }
+
+.searchSection input{
+padding:10px 14px;
+border-radius:8px;
+border:none;
+background:#0f172a;
+color:white;
+outline:none;
+}
+
+.searchSection button{
+padding:10px 16px;
+background:#6366f1;
+border:none;
+border-radius:8px;
+color:white;
+cursor:pointer;
+}
+
+/* NAV BUTTONS */
+
+.navButtons{
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.navBtn{
+padding:10px 16px;
+background:#1e293b;
+border:none;
+border-radius:8px;
+color:white;
+cursor:pointer;
+transition:0.2s;
+}
+
+.navBtn:hover{
+background:#6366f1;
+transform:translateY(-2px);
+}
+
+.profileBtn{
+width:38px;
+height:38px;
+border-radius:50%;
+border:none;
+background:#6366f1;
+color:white;
+cursor:pointer;
+font-size:18px;
+}
+
+/* ===== GALLERY GRID ===== */
+
+/* GALLERY GRID */
+
 #gallery{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-gap:25px;
-padding:30px;
-max-width:1200px;
-margin:auto;
+column-count:4;
+column-gap:20px;
+margin-top:40px;
+width:100%;
 }
+
+/* artwork card */
 
 .art{
-background:#1b1b1b;
-padding:12px;
-border-radius:12px;
-transition:all 0.3s;
-box-shadow:0 4px 15px rgba(0,0,0,0.4);
+display:inline-block;
+width:100%;
+margin-bottom:20px;
+background:#0f172a;
+border-radius:14px;
+overflow:hidden;
+box-shadow:0 10px 25px rgba(0,0,0,0.5);
+transition:0.25s;
+cursor:pointer;
 }
 
-.art img{
+.art:hover{
+transform:translateY(-6px);
+box-shadow:0 20px 40px rgba(0,0,0,0.8);
+}
+
+/* artwork image */
+
+.artMedia{
 width:100%;
-border-radius:10px;
+height:auto;
 display:block;
 }
 
+/* artwork text */
+
 .art p{
-text-align:center;
-margin-top:10px;
+padding:14px;
+margin:0;
+font-size:14px;
+opacity:0.9;
+}
+
+/* responsive */
+
+@media(max-width:1200px){
+#gallery{ column-count:3; }
+}
+
+@media(max-width:800px){
+#gallery{ column-count:2; }
+}
+
+@media(max-width:500px){
+#gallery{ column-count:1; }
 }
 .art{
 transition: transform 0.3s;
@@ -208,4 +336,201 @@ border-radius:5px;
 .upload{
 background:#222;
 color:white;
+}
+.artistBox{
+display:flex;
+align-items:center;
+gap:8px;
+padding:10px 12px;
+font-size:13px;
+opacity:0.9;
+}
+
+.artistAvatar{
+width:28px;
+height:28px;
+border-radius:50%;
+object-fit:cover;
+}
+.profileForm img{
+width:120px;
+height:120px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #333;
+}
+
+.profileAvatar{
+width:40px;
+height:40px;
+border-radius:50%;
+object-fit:cover;
+}
+/* PROFILE PAGE */
+
+.profileContainer{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+background: linear-gradient(135deg,#f6f9fc,#e9f1ff,#fdf2f8);
+font-family:Arial, sans-serif;
+padding:40px;
+}
+
+/* ===== ARTIST PROFILE PAGE ===== */
+
+.profileContainer{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+min-height:100vh;
+padding:40px;
+background: linear-gradient(135deg,#1e1e2f,#2a1f3d,#0f3460);
+font-family:'Segoe UI',sans-serif;
+color:white;
+}
+
+.profileContainer h1{
+font-size:34px;
+margin-bottom:35px;
+letter-spacing:1px;
+color:#f1f5ff;
+text-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* profile card */
+
+.profileCard{
+display:flex;
+gap:50px;
+background:linear-gradient(145deg,#2d2d44,#1f1f33);
+padding:45px;
+border-radius:18px;
+box-shadow:
+0 15px 40px rgba(0,0,0,0.5),
+inset 0 0 25px rgba(255,255,255,0.05);
+max-width:760px;
+width:100%;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+/* avatar section */
+
+.avatarSection{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:15px;
+}
+
+/* circular avatar */
+
+#avatarPreview{
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+border:5px solid #6366f1;
+box-shadow:
+0 0 20px rgba(99,102,241,0.6),
+0 8px 30px rgba(0,0,0,0.6);
+transition:0.3s;
+}
+
+#avatarPreview:hover{
+transform:scale(1.05);
+box-shadow:
+0 0 30px rgba(139,92,246,0.9),
+0 10px 40px rgba(0,0,0,0.7);
+}
+
+.avatarSection input{
+color:white;
+font-size:14px;
+cursor:pointer;
+}
+
+/* input area */
+
+.profileInputs{
+display:flex;
+flex-direction:column;
+gap:18px;
+flex:1;
+}
+
+/* inputs */
+
+.profileInputs input,
+.profileInputs textarea{
+padding:14px;
+border-radius:10px;
+border:none;
+background:#121222;
+color:white;
+font-size:15px;
+outline:none;
+box-shadow: inset 0 0 8px rgba(0,0,0,0.6);
+transition:0.2s;
+}
+
+.profileInputs input::placeholder,
+.profileInputs textarea::placeholder{
+color:#a1a1c4;
+}
+
+.profileInputs input:focus,
+.profileInputs textarea:focus{
+box-shadow:
+0 0 8px #6366f1,
+inset 0 0 10px rgba(0,0,0,0.7);
+}
+
+/* textarea */
+
+.profileInputs textarea{
+min-height:110px;
+resize:none;
+}
+
+/* save button */
+
+.profileInputs button{
+padding:14px;
+background:linear-gradient(135deg,#6366f1,#8b5cf6,#ec4899);
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+font-weight:600;
+letter-spacing:0.5px;
+transition:0.25s;
+box-shadow:0 6px 20px rgba(0,0,0,0.4);
+}
+
+.profileInputs button:hover{
+transform:translateY(-3px);
+box-shadow:
+0 10px 30px rgba(0,0,0,0.6),
+0 0 20px rgba(139,92,246,0.8);
+}
+
+/* mobile responsive */
+
+@media(max-width:700px){
+
+.profileCard{
+flex-direction:column;
+align-items:center;
+text-align:center;
+}
+
+.profileInputs{
+width:100%;
+}
+
 }
