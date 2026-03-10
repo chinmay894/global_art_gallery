@@ -8,7 +8,6 @@
 
 <link rel="stylesheet" href="style.css">
 
-<!-- Chart library -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
@@ -21,14 +20,14 @@
 
 <div class="pageContainer">
 
+<div id="topArtists"></div>
+
 <canvas id="rankingChart"></canvas>
 
 </div>
 
-<!-- Supabase library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
-<!-- Create Supabase client -->
 <script>
 
 const supabaseUrl = "https://fxtndjohhnyfuewyrcqm.supabase.co"
@@ -38,7 +37,6 @@ const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
 </script>
 
-<!-- Ranking logic -->
 <script src="ranking.js"></script>
 
 </body>

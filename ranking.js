@@ -6,36 +6,33 @@ const { data, error } = await supabaseClient
 .from("artworks")
 .select("artist_name, likes")
 
-console.log("data:", data)
-
 if(error){
-console.log("error:", error)
+console.log(error)
 return
 }
 
-const artistLikes = {}
+const artistData = {}
 
 data.forEach(row => {
 
-if(!artistLikes[row.artist_name]){
-artistLikes[row.artist_name] = 0
+if(!artistData[row.artist_name]){
+artistData[row.artist_name] = {
+likes:0,
+avatar:row.avatar_url
+}
 }
 
-artistLikes[row.artist_name] += Number(row.likes) || 0
+artistData[row.artist_name].likes += Number(row.likes) || 0
 
 })
 
-const sortedArtists = Object.entries(artistLikes)
-.sort((a,b)=>b[1]-a[1])
+const sortedArtists = Object.entries(artistData)
+.sort((a,b)=>b[1].likes-a[1].likes)
 .slice(0,4)
 
 const names = sortedArtists.map(a=>a[0])
 const likes = sortedArtists.map(a=>a[1].likes)
-
-
-showTopArtists(names,likes,avatars)
 createChart(names,likes)
-
 }
 
 function createChart(names, likes){
@@ -54,7 +51,6 @@ data:likes
 })
 
 }
-
 
 
 loadRanking()
