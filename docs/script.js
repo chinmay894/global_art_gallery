@@ -39,7 +39,8 @@ data.forEach(art => {
 
 const artDiv = document.createElement("div")
 artDiv.className = "art"
-
+artDiv.dataset.title = art.title.toLowerCase()
+artDiv.dataset.artist = (art.artist_name || "").toLowerCase()
 let media
 
 if(art.type === "video"){
@@ -72,9 +73,67 @@ avatar.className = "artistAvatar"
 
 const artistName = document.createElement("span")
 artistName.innerText = art.artist_name || "Unknown Artist"
+const likeBox = document.createElement("div")
+likeBox.className = "likeBox"
+
+const likeIcon = document.createElement("span")
+likeIcon.className = "likeIcon"
+
+const likedKey = "liked_" + art.id
+
+if(localStorage.getItem(likedKey)){
+likeIcon.innerText = "❤️"
+}else{
+likeIcon.innerText = "🤍"
+}
+
+const likeCount = document.createElement("span")
+likeCount.innerText = art.likes || 0
+likeCount.className = "likeCount"
+likeBox.addEventListener("click", async (event) => {
+
+event.stopPropagation()
+
+const likedKey = "liked_" + art.id
+const alreadyLiked = localStorage.getItem(likedKey)
+
+let newLikes = art.likes || 0
+
+if(alreadyLiked){
+
+newLikes = newLikes - 1
+localStorage.removeItem(likedKey)
+likeIcon.innerText = "🤍"
+
+}else{
+
+newLikes = newLikes + 1
+localStorage.setItem(likedKey,"true")
+likeIcon.innerText = "❤️"
+
+}
+
+const { error } = await supabase
+.from("artworks")
+.update({ likes: newLikes })
+.eq("id", art.id)
+
+if(error){
+console.error(error)
+return
+}
+
+likeCount.innerText = newLikes
+art.likes = newLikes
+
+})
+
+likeBox.appendChild(likeIcon)
+likeBox.appendChild(likeCount)
 
 artistBox.appendChild(avatar)
 artistBox.appendChild(artistName)
+artistBox.appendChild(likeBox)
 
 
 /* APPEND ELEMENTS */
@@ -199,3 +258,25 @@ const closeModal = document.getElementById("closeModal")
 closeModal.onclick = function(){
 document.getElementById("artModal").style.display = "none"
 }
+const searchInput = document.getElementById("searchInput")
+
+searchInput.addEventListener("input", () => {
+
+const searchValue = searchInput.value.toLowerCase()
+
+const artworks = document.querySelectorAll(".art")
+
+artworks.forEach(art => {
+
+const title = art.dataset.title
+const artist = art.dataset.artist
+
+if(title.includes(searchValue) || artist.includes(searchValue)){
+art.style.display = "block"
+}else{
+art.style.display = "none"
+}
+
+})
+
+})
