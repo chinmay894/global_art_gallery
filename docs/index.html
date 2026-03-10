@@ -20,30 +20,49 @@ const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
 
 <body>
 
-<header>
-<h1>Global Art Gallery by chinmay </h1>
-<p>Discover artworks from artists around the world  </p>
+<header class="mainHeader">
 
-<input type="text" id="searchInput" placeholder="Search artworks...">
-<button id="searchBtn">Search</button>
+<div class="logoSection">
+<h1> Art Gallery at hand </h1>
+<p>Discover artworks from artists around you</p>
+</div>
+
+<div class="searchSection">
+
+<input type="text" id="searchInput" placeholder="Search artwork">
+
+<span class="searchIcon">🔍</span>
+
+</div>
 <div class="navButtons">
 
 <button class="navBtn" onclick="window.location.href='saved.html'">
-Saved Art
+Saved
 </button>
 
-<button class="navBtn explore" onclick="window.location.href='explore.html'">
-Explore Art
+<button class="navBtn" onclick="window.location.href='explore.html'">
+Explore
 </button>
 
 <button class="navBtn upload" id="openUpload">
-Upload Art
+Upload
+</button>
+
+<button class="profileBtn" onclick="window.location.href='profile.html'">
+👤
 </button>
 
 </div>
 
 </header>
+
+
+
+<div class="pageContainer">
+
 <div id="gallery"></div>
+
+</div>
 <div id="artModal" class="modal">
   <span id="closeModal">&times;</span>
   <img id="modalImg">
