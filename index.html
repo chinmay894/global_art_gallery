@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Global Art Gallery by chinmay</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+
+const supabaseUrl = "https://fxtndjohhnyfuewyrcqm.supabase.co"
+const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4dG5kam9oaG55ZnVld3lyY3FtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MTQ1NzUsImV4cCI6MjA4ODM5MDU3NX0.MY7k5z2eAPypC1cFURAtw-XPBw8b_q4-iUzyFjgf4IU"
+
+const supabaseClient = supabase.createClient(supabaseUrl, supabaseKey)
+
+</script>
+
+<body>
+
+<header class="mainHeader">
+
+<div class="logoSection">
+<h1> Art Gallery at hand </h1>
+<p>Discover artworks from artists around you</p>
+</div>
+
+<div class="searchSection">
+
+<input type="text" id="searchInput" placeholder="Search artwork">
+
+<span class="searchIcon">🔍</span>
+
+</div>
+<div class="navButtons">
+
+<button class="navBtn" onclick="window.location.href='saved.html'">
+Saved
+</button>
+
+<button class="navBtn" onclick="window.location.href='explore.html'">
+Explore
+</button>
+
+<button class="navBtn upload" id="openUpload">
+Upload
+</button>
+
+<button class="profileBtn" onclick="window.location.href='profile.html'">
+👤
+</button>
+
+</div>
+
+</header>
+
+
+
+<div class="pageContainer">
+
+<div id="gallery"></div>
+
+</div>
+<div id="artModal" class="modal">
+  <span id="closeModal">&times;</span>
+  <img id="modalImg">
+  <p id="modalCaption"></p>
+</div>
+<div id="uploadModal" class="modal">
+
+  <div class="uploadBox">
+
+    <h2>Upload Your Artwork</h2>
+
+    <input type="text" id="uploadTitle" placeholder="Artwork title">
+    <br><br>
+
+    <input type="file" id="uploadImage">
+    <br><br>
+
+    <button id="uploadBtn">Upload</button>
+
+    <button id="closeUpload">Cancel</button>
+
+  </div>
+
+</div>
+
+<script type="module" src="script.js"></script>
+
+
+
+</body>
+</html>
