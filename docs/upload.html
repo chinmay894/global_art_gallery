@@ -26,7 +26,14 @@ const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS
 const supabase = createClient(supabaseUrl, supabaseKey)
 
 document.getElementById("uploadBtn").addEventListener("click", async () => {
+const { data: { user } } = await supabase.auth.getUser()
 
+console.log("Logged user:", user)
+
+if(!user){
+alert("Please login first")
+return
+}
 console.log("Upload clicked")
 
 const file = document.getElementById("image").files[0]
