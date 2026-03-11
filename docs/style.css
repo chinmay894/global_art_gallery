@@ -623,7 +623,34 @@ object-fit:cover;
 
 /* Mobile Styles (for screens 768px or smaller) */
 @media screen and (max-width: 768px) {
-  .container {
-    flex-direction: column; /* Stacks elements vertically */
+  header {
+    flex-direction: column; /* Stacks logo and menu vertically */
+    padding: 20px 0;        /* Adds space to make it feel bigger */
+    text-align: center;
   }
 }
+img, .artwork {
+  max-width: 100%;
+  height: auto; /* Keeps the ratio so it doesn't look stretched */
+}
+
+/* Specific mobile adjustment */
+@media screen and (max-width: 768px) {
+  .artwork {
+    width: 90%;  /* Shrinks the artwork slightly so it doesn't touch the edges */
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 768px) {
+  .icon {
+    width: 44px;  /* Larger for fingers */
+    height: 44px;
+    margin: 10px; /* More space between icons */
+  }
+}
+h1 {
+  /* Min: 24px, Ideal: 5vw (5% of screen width), Max: 60px */
+  font-size: clamp(24px, 5vw, 60px); 
+}
+
+
