@@ -616,3 +616,10 @@ object-fit:cover;
     color: #ff0055;
     cursor: default;
 }
+html {
+    font-size: 24px; /* Increases the baseline from the standard 16px */
+}
+
+body {
+    line-height: 2.0; /* Adds vertical space so lines don't overlap */
+}
