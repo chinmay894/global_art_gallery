@@ -616,29 +616,3 @@ object-fit:cover;
     color: #ff0055;
     cursor: default;
 }
-/* 1. RESET BOX MODEL (Prevents padding from breaking layout) */
-* {
-    box-sizing: border-box;
-}
-
-/* 2. MAKE THE MAIN CONTAINER FLUID */
-/* Replace '.container' with whatever class wraps your main content */
-body, .container, .wrapper, main {
-    width: 100%;           /* Forces it to fit the screen width */
-    max-width: 100%;       /* Ensures it never exceeds the screen */
-    overflow-x: hidden;    /* Hides any accidental side-scrolling */
-    margin: 0;
-    padding: 0;
-}
-
-/* 3. PREVENT IMAGES FROM OVERFLOWING */
-img, video, canvas, iframe {
-    max-width: 100%;       /* scale down if too big */
-    height: auto;          /* maintain aspect ratio */
-    display: block;        /* removes tiny gap below images */
-}
-
-/* 4. FIX TYPOGRAPHY SIZING */
-html {
-    font-size: 100%;       /* Sets base text size */
-}
