@@ -34,6 +34,17 @@ if(!user){
 alert("Please login first")
 return
 }
+const { data: artist } = await supabase
+.from("artists")
+.select("*")
+.eq("user_id", user.id)
+.maybeSingle()
+
+if(!artist){
+alert("Create artist profile first")
+return
+}
+
 console.log("Upload clicked")
 
 const file = document.getElementById("image").files[0]
@@ -44,7 +55,8 @@ alert("Select an image first")
 return
 }
 
-const fileName = Date.now() + "-" + file.name
+
+const fileName = user.id + "-" + Date.now() + "-" + file.name
 
 const { error: uploadError } =
 await supabase.storage
@@ -69,7 +81,8 @@ await supabase
 {
 title: title,
 image_url: data.publicUrl,
-status: "pending"
+status: "pending",
+artist_id: user.id
 }
 ])
 
