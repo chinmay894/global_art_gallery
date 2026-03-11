@@ -51,6 +51,7 @@ body::before {
    2. HEADER & NAVIGATION
    ========================================================================== */
 .mainHeader {
+    height:30vh;
     position: relative;
     min-height: 320px;
     padding: 60px 80px;
@@ -615,21 +616,4 @@ object-fit:cover;
 .creatorTag:hover span {
     color: #ff0055;
     cursor: default;
-}
-header{
-height:30vh;
-}
-
-.gallery{
-display:grid;
-grid-template-columns: repeat(3,1fr);
-gap:20px;
-}
-
-@media (max-width:768px){
-
-.gallery{
-grid-template-columns: repeat(2,1fr);
-}
-
 }
