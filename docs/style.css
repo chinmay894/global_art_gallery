@@ -57,7 +57,7 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-image: url("docs/assets1/gftart.jpeg");
+    background-image: url("assets1/graffiti wall.webp");
     background-size: cover;
     background-position: center;
     border-bottom: 1px solid var(--glass-border);
