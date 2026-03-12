@@ -35,6 +35,8 @@ return
 
 gallery.innerHTML = ""
 
+if(!data) return
+
 data.forEach(art => {
 
 const artDiv = document.createElement("div")
@@ -169,8 +171,11 @@ uploadBtn.onclick = async () => {
 
 /* CHECK IF PROFILE EXISTS */
 
-if(!localStorage.getItem("artistName")){
+const artistName = localStorage.getItem("artistName")
+
+if(!artistName){
 alert("Create your artist profile first")
+window.location.href = "profile.html"
 return
 }
 
