@@ -10,19 +10,17 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
   }
 })
 
-/* CHECK LOGIN */
+/* WAIT FOR SESSION */
 
 const { data: { session } } = await supabase.auth.getSession()
 
-const user = session?.user
-
-if(!user){
-alert("Please login first")
-window.location.href = "login.html"
-return
+if (!session) {
+  window.location.href = "login.html"
 }
-/* LOAD EXISTING PROFILE */
-/* LOAD EXISTING PROFILE */
+
+const user = session.user
+
+/* LOAD PROFILE */
 
 const { data: profile } = await supabase
 .from("artists")
@@ -30,7 +28,7 @@ const { data: profile } = await supabase
 .eq("user_id", user.id)
 .maybeSingle()
 
-if(profile){
+if (profile) {
 
 document.getElementById("artistName").value = profile.artist_name
 document.getElementById("artistBio").value = profile.artist_bio
@@ -41,20 +39,6 @@ document.getElementById("avatarPreview").src = profile.artist_avatar
 }
 
 }
-/* AVATAR PREVIEW */
-
-const avatarInput = document.getElementById("artistAvatar")
-const avatarPreview = document.getElementById("avatarPreview")
-
-avatarInput.addEventListener("change", () => {
-
-const file = avatarInput.files[0]
-
-if(file){
-avatarPreview.src = URL.createObjectURL(file)
-}
-
-})
 
 /* SAVE PROFILE */
 
@@ -70,64 +54,63 @@ alert("Artist name required")
 return
 }
 
-if(!avatar && !avatarPreview.src){
+if(!avatar){
 alert("Avatar required")
 return
 }
+
 /* CHECK EXISTING PROFILE */
 
-const { data: existingProfile } = await supabase
+const { data: existing } = await supabase
 .from("artists")
 .select("*")
 .eq("user_id", user.id)
 .maybeSingle()
 
-if(existingProfile){
-alert("You already created your artist profile")
+if(existing){
+alert("Profile already exists")
 return
 }
 
 /* UPLOAD AVATAR */
 
-const avatarName = Date.now() + "-" + avatar.name
+const avatarName = user.id + "-" + Date.now() + "-" + avatar.name
 
-const { error: uploadError } = await supabase.storage
+const { error: uploadError } =
+await supabase.storage
 .from("artists")
 .upload(avatarName, avatar)
 
 if(uploadError){
-alert("Avatar upload failed")
+alert(uploadError.message)
 return
 }
 
-/* GET PUBLIC URL */
+/* GET URL */
 
 const { data } = supabase.storage
 .from("artists")
 .getPublicUrl(avatarName)
 
-const avatarUrl = data.publicUrl
+/* INSERT PROFILE */
 
-/* SAVE PROFILE */
-console.log(user.id, name, avatarUrl, bio, link)
 const { error } = await supabase
 .from("artists")
 .insert([
 {
 user_id: user.id,
 artist_name: name,
-artist_avatar: avatarUrl,
+artist_avatar: data.publicUrl,
 artist_bio: bio,
 support_link: link
 }
 ])
 
 if(error){
-console.error(error)
 alert(error.message)
 return
 }
 
-alert("Profile saved successfully!")
+alert("Profile created successfully")
 
 })
