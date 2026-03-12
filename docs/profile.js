@@ -12,11 +12,14 @@ const supabase = createClient(supabaseUrl, supabaseKey, {
 
 /* CHECK LOGIN */
 
-const { data: { user } } = await supabase.auth.getUser()
+const { data: { session } } = await supabase.auth.getSession()
+
+const user = session?.user
 
 if(!user){
 alert("Please login first")
 window.location.href = "login.html"
+return
 }
 /* LOAD EXISTING PROFILE */
 /* LOAD EXISTING PROFILE */
@@ -120,7 +123,8 @@ support_link: link
 ])
 
 if(error){
-alert("Database save failed")
+console.error(error)
+alert(error.message)
 return
 }
 

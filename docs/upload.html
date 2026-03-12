@@ -28,20 +28,30 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 document.getElementById("uploadBtn").addEventListener("click", async () => {
 const { data: { user } } = await supabase.auth.getUser()
 
-console.log("Logged user:", user)
+
 
 if(!user){
 alert("Please login first")
 return
 }
-const { data: artist } = await supabase
+
+const { data: artist, error: artistError } = await supabase
 .from("artists")
 .select("*")
 .eq("user_id", user.id)
 .maybeSingle()
 
+console.log("User:", user)
+console.log("Artist:", artist)
+console.log("Artist error:", artistError)
+
+if(artistError){
+alert("Database error: " + artistError.message)
+return
+}
+
 if(!artist){
-alert("Create artist profile first")
+alert("Artist profile not found")
 return
 }
 
@@ -64,8 +74,8 @@ await supabase.storage
 .upload(fileName, file)
 
 if(uploadError){
-console.error(uploadError)
-alert("Upload failed")
+console.error("Upload error:", uploadError)
+alert(uploadError.message)
 return
 }
 
