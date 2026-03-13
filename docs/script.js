@@ -171,13 +171,29 @@ uploadBtn.onclick = async () => {
 
 /* CHECK IF PROFILE EXISTS */
 
-const artistName = localStorage.getItem("artistName")
+/* CHECK IF ARTIST PROFILE EXISTS */
 
-if(!artistName){
+const { data: { user } } = await supabase.auth.getUser()
+
+if(!user){
+alert("Please login first")
+return
+}
+
+const { data: profile } = await supabase
+.from("artists")
+.select("*")
+.eq("user_id", user.id)
+.maybeSingle()
+
+if(!profile){
 alert("Create your artist profile first")
 window.location.href = "profile.html"
 return
 }
+
+const artistName = profile.artist_name
+const artistAvatar = profile.artist_avatar
 
 /* GET ARTWORK DATA */
 
@@ -222,8 +238,8 @@ const { error: insertError } = await supabase
 title: title,
 image_url: data.publicUrl,
 type: fileType,
-artist_name: localStorage.getItem("artistName"),
-artist_avatar: localStorage.getItem("artistAvatar"),
+artist_name: artistName,
+artist_avatar: artistAvatar,
 status: "pending"
 }
 ])
