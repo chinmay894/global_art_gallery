@@ -1,15 +1,19 @@
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"
 
 const supabaseUrl = "https://fxtndjohhnyfuewyrcqm.supabase.co"
-const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4dG5kam9oaG55ZnVld3lyY3FtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MTQ1NzUsImV4cCI6MjA4ODM5MDU3NX0.MY7k5z2eAPypC1cFURAtw-XPBw8b_q4-iUzyFjgf4IU"
+const supabaseKey ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ4dG5kam9oaG55ZnVld3lyY3FtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MTQ1NzUsImV4cCI6MjA4ODM5MDU3NX0.MY7k5z2eAPypC1cFURAtw-XPBw8b_q4-iUzyFjgf4IU"
 
 const supabase = createClient(supabaseUrl, supabaseKey)
+
+/* ELEMENTS */
 
 const gallery = document.getElementById("gallery")
 const uploadModal = document.getElementById("uploadModal")
 const openUpload = document.getElementById("openUpload")
 const closeUpload = document.getElementById("closeUpload")
 const uploadBtn = document.getElementById("uploadBtn")
+
+/* OPEN / CLOSE UPLOAD MODAL */
 
 openUpload.onclick = () => {
 uploadModal.style.display = "flex"
@@ -19,14 +23,14 @@ closeUpload.onclick = () => {
 uploadModal.style.display = "none"
 }
 
+/* LOAD APPROVED ARTWORKS */
+
 async function loadArtworks(){
 
 const { data, error } = await supabase
 .from("artworks")
 .select("*")
 .eq("status","approved")
-
-console.log(data)
 
 if(error){
 console.error(error)
@@ -43,6 +47,7 @@ const artDiv = document.createElement("div")
 artDiv.className = "art"
 artDiv.dataset.title = art.title.toLowerCase()
 artDiv.dataset.artist = (art.artist_name || "").toLowerCase()
+
 let media
 
 if(art.type === "video"){
@@ -63,8 +68,7 @@ media.className = "artMedia"
 const caption = document.createElement("p")
 caption.innerText = art.title
 
-
-/* ARTIST SECTION */
+/* ARTIST BOX */
 
 const artistBox = document.createElement("div")
 artistBox.className = "artistBox"
@@ -74,7 +78,10 @@ avatar.src = art.artist_avatar || "https://via.placeholder.com/30"
 avatar.className = "artistAvatar"
 
 const artistName = document.createElement("span")
-artistName.innerText = art.artist_name || "Unknown Artist"
+artistName.innerText = art.artist_name || "Anonymous Artist"
+
+/* LIKE SYSTEM */
+
 const likeBox = document.createElement("div")
 likeBox.className = "likeBox"
 
@@ -92,16 +99,14 @@ likeIcon.innerText = "🤍"
 const likeCount = document.createElement("span")
 likeCount.innerText = art.likes || 0
 likeCount.className = "likeCount"
+
 likeBox.addEventListener("click", async (event) => {
 
 event.stopPropagation()
 
-const likedKey = "liked_" + art.id
-const alreadyLiked = localStorage.getItem(likedKey)
-
 let newLikes = art.likes || 0
 
-if(alreadyLiked){
+if(localStorage.getItem(likedKey)){
 
 newLikes = newLikes - 1
 localStorage.removeItem(likedKey)
@@ -137,13 +142,11 @@ artistBox.appendChild(avatar)
 artistBox.appendChild(artistName)
 artistBox.appendChild(likeBox)
 
-
 /* APPEND ELEMENTS */
 
 artDiv.appendChild(media)
 artDiv.appendChild(caption)
 artDiv.appendChild(artistBox)
-
 
 /* FULLSCREEN MODAL */
 
@@ -167,11 +170,9 @@ gallery.appendChild(artDiv)
 
 loadArtworks()
 
+/* UPLOAD ARTWORK */
+
 uploadBtn.onclick = async () => {
-
-/* CHECK IF PROFILE EXISTS */
-
-/* CHECK IF ARTIST PROFILE EXISTS */
 
 const { data: { user } } = await supabase.auth.getUser()
 
@@ -180,22 +181,23 @@ alert("Please login first")
 return
 }
 
+/* TRY GET PROFILE */
+
+let artistName = "Anonymous Artist"
+let artistAvatar = "https://via.placeholder.com/30"
+
 const { data: profile } = await supabase
 .from("artists")
 .select("*")
 .eq("user_id", user.id)
 .maybeSingle()
 
-if(!profile){
-alert("Create your artist profile first")
-window.location.href = "profile.html"
-return
+if(profile){
+artistName = profile.artist_name
+artistAvatar = profile.artist_avatar
 }
 
-const artistName = profile.artist_name
-const artistAvatar = profile.artist_avatar
-
-/* GET ARTWORK DATA */
+/* GET FILE */
 
 const title = document.getElementById("uploadTitle").value
 const file = document.getElementById("uploadImage").files[0]
@@ -207,11 +209,11 @@ return
 
 const fileType = file.type.startsWith("video") ? "video" : "image"
 
-/* CREATE FILE NAME */
+/* UNIQUE FILE NAME */
 
-const fileName = Date.now() + "-" + file.name
+const fileName = user.id + "-" + Date.now() + "-" + file.name
 
-/* UPLOAD FILE TO SUPABASE */
+/* UPLOAD FILE */
 
 const { error: uploadError } = await supabase.storage
 .from("artworks")
@@ -229,7 +231,7 @@ const { data } = supabase.storage
 .from("artworks")
 .getPublicUrl(fileName)
 
-/* INSERT ARTWORK INTO DATABASE */
+/* INSERT INTO DATABASE */
 
 const { error: insertError } = await supabase
 .from("artworks")
@@ -255,6 +257,9 @@ alert("Artwork uploaded! Waiting for approval.")
 uploadModal.style.display = "none"
 
 }
+
+/* REALTIME GALLERY UPDATE */
+
 supabase
 .channel('artworks-channel')
 .on(
@@ -267,18 +272,22 @@ table: 'artworks'
 (payload) => {
 
 console.log("Database updated", payload)
-
 loadArtworks()
 
 }
 )
 .subscribe()
 
+/* CLOSE MODAL */
+
 const closeModal = document.getElementById("closeModal")
 
 closeModal.onclick = function(){
 document.getElementById("artModal").style.display = "none"
 }
+
+/* SEARCH */
+
 const searchInput = document.getElementById("searchInput")
 
 searchInput.addEventListener("input", () => {
