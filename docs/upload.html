@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    
 <title>Upload Artwork</title>
 </head>
 
@@ -28,33 +29,12 @@ const supabase = createClient(supabaseUrl, supabaseKey)
 document.getElementById("uploadBtn").addEventListener("click", async () => {
 const { data: { user } } = await supabase.auth.getUser()
 
-
+console.log("Logged user:", user)
 
 if(!user){
 alert("Please login first")
 return
 }
-
-const { data: artist, error: artistError } = await supabase
-.from("artists")
-.select("*")
-.eq("user_id", user.id)
-.maybeSingle()
-
-console.log("User:", user)
-console.log("Artist:", artist)
-console.log("Artist error:", artistError)
-
-if(artistError){
-alert("Database error: " + artistError.message)
-return
-}
-
-if(!artist){
-alert("Artist profile not found")
-return
-}
-
 console.log("Upload clicked")
 
 const file = document.getElementById("image").files[0]
@@ -65,8 +45,7 @@ alert("Select an image first")
 return
 }
 
-
-const fileName = user.id + "-" + Date.now() + "-" + file.name
+const fileName = Date.now() + "-" + file.name
 
 const { error: uploadError } =
 await supabase.storage
@@ -74,8 +53,8 @@ await supabase.storage
 .upload(fileName, file)
 
 if(uploadError){
-console.error("Upload error:", uploadError)
-alert(uploadError.message)
+console.error(uploadError)
+alert("Upload failed")
 return
 }
 
@@ -91,8 +70,7 @@ await supabase
 {
 title: title,
 image_url: data.publicUrl,
-status: "pending",
-artist_id: user.id
+status: "pending"
 }
 ])
 
