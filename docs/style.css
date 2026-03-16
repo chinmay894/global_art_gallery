@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
 /* ==========================================================================
    1. GLOBAL SETTINGS & VARIABLES
    ========================================================================== */
@@ -57,7 +59,7 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-image: url("assets1/graffiti wall.webp");
+    background-image: url("assets1/ss.jpeg");
     background-size: cover;
     background-position: center;
     border-bottom: 1px solid var(--glass-border);
@@ -74,15 +76,28 @@ body::before {
 .mainHeader > * { position: relative; z-index: 2; }
 
 .logoSection h1 {
-    font-size: 32px;
-    font-weight: 800;
-    text-transform: uppercase;
+    font-family: 'Permanent Marker', cursive;
+    font-size: 50px;
     letter-spacing: 2px;
+
+    color: white;
+    -webkit-text-stroke: 0.1px black;   /* THIS CREATES THE BLACK BORDER */
+
     background: linear-gradient(90deg, #fff, var(--accent-primary), var(--accent-secondary));
     background-size: 200% auto;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+
     animation: shine 5s linear infinite;
+}
+.logoSection p {
+    font-family: 'Permanent Marker', cursive;
+    font-size: 22px;
+      color: white;
+
+    -webkit-text-stroke: 1px black;   /* black border */
+    margin-top: 10px;
+    color: rgb(159, 230, 242);
 }
 
 @keyframes shine { to { background-position: 200% center; } }
@@ -591,12 +606,12 @@ object-fit:cover;
     top: 10px;
     right: 20px;
     text-align: right;
-    font-family: 'Inter', sans-serif;
+      font-family: 'Permanent Marker', cursive;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: #666;
+    color: #8afbff;
 }
 
 .creatorTag span {

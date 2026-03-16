@@ -17,10 +17,12 @@ const uploadBtn = document.getElementById("uploadBtn")
 
 openUpload.onclick = () => {
 uploadModal.style.display = "flex"
+history.pushState({ uploadModal: true }, "")
 }
 
 closeUpload.onclick = () => {
 uploadModal.style.display = "none"
+history.back()
 }
 
 /* LOAD APPROVED ARTWORKS */
@@ -295,9 +297,16 @@ history.back()
 window.addEventListener("popstate", () => {
 
 const modal = document.getElementById("artModal")
+const uploadModal = document.getElementById("uploadModal")
 
 if(modal.style.display === "flex"){
 modal.style.display = "none"
+return
+}
+
+if(uploadModal.style.display === "flex"){
+uploadModal.style.display = "none"
+return
 }
 
 })
