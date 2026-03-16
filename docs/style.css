@@ -60,7 +60,7 @@ body::before {
     flex-direction:column;   /* STACK EVERYTHING */
     justify-content: space-between;
     align-items: center;
-    background-image: url("assets1/ss.jpeg");
+    background-image: url("assets1/graffiti wall.webp");
     background-size: cover;
     background-position: center;
     border-bottom: 1px solid var(--glass-border);
