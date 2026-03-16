@@ -160,6 +160,8 @@ modal.style.display = "flex"
 modalImg.src = art.image_url
 modalCaption.innerText = art.title
 
+history.pushState({ modalOpen: true }, "")
+
 })
 
 gallery.appendChild(artDiv)
@@ -279,12 +281,26 @@ loadArtworks()
 .subscribe()
 
 /* CLOSE MODAL */
+/* CLOSE MODAL */
 
 const closeModal = document.getElementById("closeModal")
 
 closeModal.onclick = function(){
 document.getElementById("artModal").style.display = "none"
+history.back()
 }
+
+/* HANDLE MOBILE BACK BUTTON */
+
+window.addEventListener("popstate", () => {
+
+const modal = document.getElementById("artModal")
+
+if(modal.style.display === "flex"){
+modal.style.display = "none"
+}
+
+})
 
 /* SEARCH */
 
