@@ -108,13 +108,14 @@ body::before {
 .searchSection { position: relative; }
 
 #searchInput {
-    padding: 12px 45px 12px 20px;
-    border-radius: 30px;
+    padding: 16px 50px 16px 22px;
+    font-size: 16px;
+    border-radius: 35px;
     border: 1px solid var(--glass-border);
     background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(10px);
     color: white;
-    width: 260px;
+    width: 320px;
     transition: var(--transition);
 }
 
@@ -136,12 +137,13 @@ body::before {
 
 /* Navigation Buttons */
 .navBtn {
-    padding: 10px 22px;
-    border-radius: 12px;
+    padding: 15px 27px;
+    font-size: 16px;      /* bigger text */
+    border-radius: 14px;
     border: 1px solid var(--glass-border);
     background: var(--bg-card);
     color: white;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     transition: var(--transition);
 }
@@ -164,8 +166,9 @@ body::before {
 }
 
 .profileBtn {
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
+    font-size: 20px;
     border-radius: 50%;
     border: 2px solid var(--accent-primary);
     background: linear-gradient(45deg, var(--accent-primary), var(--accent-secondary));
