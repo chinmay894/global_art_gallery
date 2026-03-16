@@ -57,6 +57,7 @@ body::before {
     min-height: 320px;
     padding: 60px 80px;
     display: flex;
+    flex-direction:column;   /* STACK EVERYTHING */
     justify-content: space-between;
     align-items: center;
     background-image: url("assets1/ss.jpeg");
@@ -75,9 +76,14 @@ body::before {
 
 .mainHeader > * { position: relative; z-index: 2; }
 
+
+.logoSection{
+text-align:center;
+}    
 .logoSection h1 {
     font-family: 'Permanent Marker', cursive;
-    font-size: 50px;
+    font-size: 60px;
+    margin-bottom: 1px;   /* reduces space under the title */
     letter-spacing: 2px;
 
     color: white;
@@ -93,7 +99,8 @@ body::before {
 .logoSection p {
     font-family: 'Permanent Marker', cursive;
     font-size: 22px;
-      color: white;
+    margin-top: 0px;  
+    color: white;
 
     -webkit-text-stroke: 1px black;   /* black border */
     margin-top: 10px;
@@ -102,15 +109,28 @@ body::before {
 
 @keyframes shine { to { background-position: 200% center; } }
 
-.navContainer { display: flex; align-items: center; gap: 20px; }
+.navContainer{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:50px;
+width:100%;
+}
 
 /* Search Bar Styling */
-.searchSection { position: relative; }
+.searchSection{
+position:relative;
+display:flex;
+justify-content:center;
+margin-bottom:20px; 
+margin-top: 40px; 
+}
 
 #searchInput {
-    padding: 16px 50px 16px 22px;
+    padding: 10px 55px 15px 20px;
     font-size: 16px;
-    border-radius: 35px;
+    border-radius: 30px;
     border: 1px solid var(--glass-border);
     background: rgba(15, 23, 42, 0.8);
     backdrop-filter: blur(10px);
@@ -128,7 +148,7 @@ body::before {
 
 .searchIcon {
     position: absolute;
-    right: 18px;
+    right:calc(50% - 150px); 
     top: 50%;
     transform: translateY(-50%);
     color: var(--accent-primary);
@@ -604,30 +624,57 @@ object-fit:cover;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap');
 
-.creatorTag {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    text-align: right;
-      font-family: 'Permanent Marker', cursive;
-    font-size: 10px;
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: #8afbff;
+.creatorTag{
+position:absolute;
+top:10px;
+right:20px;
+font-family:'Permanent Marker', cursive;
+font-size:10px;
+letter-spacing:1px;
+color:rgb(213, 215, 216);
 }
 
-.creatorTag span {
-    display: block;
-    margin-top: -5px; /* Adjusted because graffiti fonts often have large spacing */
-    font-family: 'Docallisme', cursive;
-    font-size: 2.2rem; /* Increased size to show off the font details */
-    color: #000;
-    text-transform: none;
-    line-height: 1;
-    /* Keeps the authentic hand-drawn look without extra effects */
-    transform: rotate(-2deg);
-    transition: color 0.2s ease;
+.creatorTag span{
+font-size:22px;
+display:inline-block;
+margin-left:6px;
+transform:rotate(-8deg);
+font-weight:900;
+
+/* animated street colors in the text */
+background: linear-gradient(
+90deg,
+#ff0055,
+#ff8c00,
+#ffd000,
+#39ff14,
+#00eaff,
+#a855f7,
+#ff0055
+);
+
+background-size:400%;
+
+/* make gradient fill the text */
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+
+/* subtle shadow for readability */
+text-shadow:1px 1px 2px rgba(0,0,0,0.4);
+
+animation:streetText 6s linear infinite;
+
+}
+@keyframes streetText{
+
+0%{
+background-position:0%;
+}
+
+100%{
+background-position:400%;
+}
+
 }
 
 .creatorTag:hover span {
@@ -639,5 +686,14 @@ html {
 }
 
 body {
-    line-height: 2.0; /* Adds vertical space so lines don't overlap */
+    line-height: 1.0; /* Adds vertical space so lines don't overlap */
+}
+.navButtons{
+display:flex;
+flex-direction:row;
+justify-content:center;
+flex-wrap:wrap;   /* prevents buttons leaving screen */
+align-items:center;
+gap:20px;
+width:100%;
 }
